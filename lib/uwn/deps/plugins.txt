@@ -1,0 +1,11 @@
+UWN plugin data missing!!!!!
+
+It's too large for the repository, download it instead from the source below:
+
+http://www.mpi-inf.mpg.de/yago-naga/uwn/downloads.html
+http://www.mpi-inf.mpg.de/yago-naga/uwn/uwn.zip
+
+Else, use it's online equivalent:
+
+http://www.mpi-inf.mpg.de/yago-naga/uwn/downloads.html
+http://www.mpi-inf.mpg.de/yago-naga/uwn/uwnapi.zip

@@ -1,8 +1,10 @@
 # Uwn::Api
 
-UWN/MENTA: Towards a Universal Multilingual Wordnet API (Ruby on Rails) gem.
+UWN/MENTA: Towards a Universal Multilingual Wordnet API (Ruby on Rails) gem. 
 
 * http://www.mpi-inf.mpg.de/yago-naga/uwn/downloads.html
+
+NOTE: this gem depends on JRuby (Java) and uwnapi.jar (which is included).
 
 
 ## Installation
