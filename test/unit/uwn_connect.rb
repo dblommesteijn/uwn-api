@@ -5,37 +5,39 @@ require File.expand_path(File.dirname(__FILE__) + "/../../lib/uwn/api")
 
 class UwnConnect < Test::Unit::TestCase
 
+
   def setup
-    @uwn_connect = Uwn::Api::Connect.new
+    @uwn = Uwn::Api::Connect.new
   end
 
   def teardown
   end
 
   def test_connection_uwn_offline
-    it = @uwn_connect.uwn.get_meaning_entities("muscular", "eng")
+    # test object creation
+    assert @uwn.is_a?(Uwn::Api::Connect), "expected Connect object"
+    # query meaning for gem in English
+    meaning = @uwn.meaning("gem", "eng")
+    assert meaning.is_a?(Uwn::Api::Meaning), "expected Meaning object"
 
-    puts @uwn_connect.uwn.inspect
-    @uwn_connect.uwn
-
-    while it.has_next do
-
-      puts "------------------"
-      meaningStatement = it.next
-
-      puts meaningStatement.inspect
-
-      subject = meaningStatement.get_subject
-      predicate = meaningStatement.get_predicate
-      weight = meaningStatement.get_weight
-      predicate_id = predicate.get_id
-
-      puts subject
-      puts predicate
-      puts weight
-
-
+    # test nested objects    
+    assert meaning.statement.is_a?(Uwn::Api::Statement), "expected Statement object"
+    meaning.statement.statements.each do |statement|
+      assert statement.is_a?(Uwn::Api::Statement), "expected Statement object"
     end
+
+    # collecting synonyms (synsets depth = 1)
+    # assert meaning.synonyms.map{|t| t.term_str }.uniq == []
+
+    # list glossary
+    # puts meaning.glosses.map{|t| t.term_str }
+
+    # list translations
+    # puts meaning.lexicalizations.map{|t| t.language }
+
+    # list related synsets
+    # puts meaning.subclasses.map{|t| t.object.to_s }
+
   end
 
   def test_connection_uwn_online

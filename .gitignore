@@ -18,6 +18,4 @@ tmp
 
 .DS_Store
 
-lib/uwn/deps/plugins/uwn.dat
-
-lib/uwn/deps/plugins/wordnet.dat
+lib/uwn/deps/plugins/*.dat

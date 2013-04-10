@@ -11,6 +11,7 @@ module Uwn
       import 'org.lexvo.uwn.Entity'
       import 'org.lexvo.uwn.Statement'
 
+
       def initialize
         begin
           # setup plugin directory
@@ -24,10 +25,29 @@ module Uwn
         end
       end
 
-      def uwn
-        @uwn
+      def meaning term, language
+        meaning = Meaning.new connect: self, term: term, language: language
+        # get meaning entities
+        mes = @uwn.get_meaning_entities term, language
+        # iterate entities
+        while mes.has_next do
+          # append statment to meaning object
+          meaning.statement << mes.next
+        end
+        meaning
       end
 
+
+      def statements object_string
+        ret = []
+        mes = @uwn.get(Entity.new(object_string))
+        while mes.has_next do
+          ret << mes.next
+        end
+        ret 
+      end
+
+      
     end
 
   end
