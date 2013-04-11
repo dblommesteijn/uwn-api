@@ -69,6 +69,10 @@ module Uwn
         @object.get_weight
       end
 
+      def to_s
+        @object.get_subject.to_s
+      end
+
       # synset for current statement (not tested, depends on predicate!)
       def synset
         unless @object.nil?
