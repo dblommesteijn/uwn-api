@@ -1,11 +1,12 @@
-
 module Uwn
   module Api
-      
+    
+    # Wrapper class for UWN Statement equivalent (with some abstracter function)
     class Statement
 
       attr_accessor :parent, :statements
 
+      # Statement constructor
       def initialize options={}
         self.parent = options[:parent] if options.include? :parent
         @object = options[:object] if options.include? :object
@@ -15,16 +16,12 @@ module Uwn
 
       # term name as a string
       def term_str
-        #@object.get_object.to_s.gsub(/^([t][\/]#{@parent_language}[\/]){1}/, "")
-        @object.get_object.get_term_str #to_s.gsub(/^([t][\/][a-z]{3}[\/]){1}/, "")
+        @object.get_object.get_term_str
       end
 
       # language of object
       def language
         @object.get_object.get_term_language
-        # match = @object.get_object.get_term_language #to_s.match(/[t][\/]([a-z]{3})[\/]{1}[\w]*/)
-        # return match[1] unless match.nil?
-        # nil
       end
 
       # word lexcat (noun, verb, adj etc.)
@@ -34,10 +31,12 @@ module Uwn
         nil
       end
 
+      # match current to the Meaning (root object) language
       def is_synonym?
-        @object.get_object.get_term_language == @parent_language #.to_s.match(/[t][\/]#{@parent_language}[\/][\w]+/).nil?
+        @object.get_object.get_term_language == @parent_language
       end
 
+      # is the current object referenced to a synset?
       def has_synset?
         self.synset.is_a? String
       end
@@ -55,22 +54,22 @@ module Uwn
         @object.get_subject
       end
 
-      # object of object
+      # object of object (raw object)
       def object
         @object.get_object
       end
 
-      # predicate object
+      # predicate object (tells something about the object)
       def predicate
         @object.get_predicate
       end
 
-      # weight object
+      # weight of the link
       def weight
         @object.get_weight
       end
 
-      # current synset (not tested, depends on predicate!)
+      # synset for current statement (not tested, depends on predicate!)
       def synset
         unless @object.nil?
           os = @object.get_object.to_s
@@ -80,33 +79,40 @@ module Uwn
         end
       end
 
+      # get filtered categories (word types ex. verb, noun) from synset
       def lexical_categories
         self.predicate_match "rel:lexical_category"
       end
 
+      # get filtered lexicalizations (translations) from synset
       def lexicalizations
         self.predicate_match "rel:lexicalization"
       end
 
+      # get filtered synonyms from synset
       def synonyms
         sts = self.predicate_match "rel:lexicalization"
         sts.reject{|t| !t.is_synonym? }
       end
 
+      # get filtered subclasses from synset
       def subclasses
         self.predicate_match "rel:subclass"
       end
 
+      # get filtered glosses from synset
       def glosses
         self.predicate_match "rel:has_gloss"
       end
 
+      # get raw synsets
       def synsets
         self.predicate_match
       end
 
       protected
 
+      # get predicates (with or without name filter)
       def predicate_match predicate_name = nil
         sts = self.lookup_synset self.synset
         sts.map!{|s| Statement.new(parent: self, object: s) }
@@ -114,6 +120,7 @@ module Uwn
         sts
       end
 
+      # get unique synsets from uwn
       def lookup_synset synset
         root = Util.parent_root self
         root.connect.statements(synset)

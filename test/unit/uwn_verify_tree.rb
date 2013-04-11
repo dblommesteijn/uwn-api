@@ -71,15 +71,14 @@ class UwnVerifyTree < Test::Unit::TestCase
   def test_synonyms_depth_1
     meaning = @uwn.meaning("gem", "eng")
     assert meaning.synonyms.size == meaning.statements.flat_map{ |s| s.synonyms }.size
-    # assert meaning.synonyms.size == 36
-    puts meaning.synonyms.size
+    assert meaning.synonyms.size == 36
     # iterate synonyms
     meaning.synonyms.each do |synonym|
-      puts synonym.object.to_s
       assert synonym.is_a?(Uwn::Api::Statement), "expected Statement object"
       assert synonym.term_str.is_a?(String), "expected String object"
       assert synonym.predicate.to_s == "rel:lexicalization"
       assert synonym.object.to_s.start_with?("t/eng/"), "expected term eng"
+      assert synonym.object.get_term_language == "eng", "expected eng"
       assert synonym.is_synonym?, "expected a synonym"
     end
   end
@@ -90,7 +89,7 @@ class UwnVerifyTree < Test::Unit::TestCase
     assert meaning.lexicalizations.size == 505
     # TODO: reduce duplicates (duplicate synsets are pointless, 
     #       duplicate words are not, not sure if this works though)!
-    assert meaning.lexicalizations.uniq{|l| l.subject.to_s}.size == 6
+    assert meaning.lexicalizations.uniq{|l| l.subject}.size == 6
     meaning.lexicalizations.each do |lexicalization|
       assert lexicalization.is_a?(Uwn::Api::Statement), "expected Statement object"
       assert lexicalization.language.is_a?(String), "expected String object"

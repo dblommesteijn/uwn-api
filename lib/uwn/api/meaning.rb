@@ -2,7 +2,7 @@
 module Uwn
   module Api
     
-    # 
+    # Class for Abstract UWN Statement wrapper (with some high level functions)
     class Meaning
 
       attr_accessor :connect, :parent, :term, :language, :statements
@@ -12,19 +12,19 @@ module Uwn
         self.term = options[:term] if options.include? :term
         self.language = options[:language] if options.include? :language
         self.statements = []
-        # self.statement = Statement.new parent: self
       end
 
+      # contains a statement set?
       def has_meaning?
         !self.statements.empty?
       end
 
+      # append a statement, and wrap with a Statement object
       def append_statement statement
         self.statements << Statement.new(parent: self, object: statement)
       end
 
-      # short handeded methods
-
+      # short handeded (high level) methods
 
       def synsets
         self.statements.flat_map{ |s| s.synsets }
