@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = Uwn::Api::VERSION
   spec.authors       = ["Dennis Blommesteijn"]
   spec.email         = ["dennis@blommesteijn.com"]
-  spec.description   = %q{UWN/MENTA: Towards a Universal Multilingual Wordnet API (Ruby on Rails) gem.}
-  spec.summary       = %q{UWN/MENTA: Towards a Universal Multilingual Wordnet API (Ruby on Rails) gem.}
+  spec.description   = %q{UWN/MENTA: Towards a Universal Multilingual Wordnet API; (Ruby on Rails) gem wrapper for JRuby.}
+  spec.summary       = %q{UWN/MENTA: Towards a Universal Multilingual Wordnet API; (Ruby on Rails) gem wrapper for JRuby.}
   spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.license       = "LGPL-3"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
