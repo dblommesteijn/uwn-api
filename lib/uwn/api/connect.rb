@@ -7,16 +7,22 @@ module Uwn
       
     class Connect
 
+      DEFAULT_PATH = File.dirname(__FILE__) + "/../deps/plugins"
+
       import 'org.lexvo.uwn.UWN'
       import 'org.lexvo.uwn.Entity'
       import 'org.lexvo.uwn.Statement'
 
 
-      def initialize
+      def initialize options={}
         begin
           # setup plugin directory
-          plugins = File.expand_path(File.dirname(__FILE__) + "/../deps/plugins")
-          f = java.io.File.new(plugins.to_s)
+          unless options.include? :plugins_path
+            plugins_path = DEFAULT_PATH
+          else
+            plugins_path = options[:plugins_path]
+          end
+          f = java.io.File.new(plugins_path.to_s)
           # load uwn
           @uwn = UWN.new(f)
         rescue Exception => e
@@ -25,6 +31,7 @@ module Uwn
         end
       end
 
+      # lookup meaning of term by name and language
       def meaning term, language
         meaning = Meaning.new connect: self, term: term, language: language
         # get meaning entities
@@ -32,12 +39,12 @@ module Uwn
         # iterate entities
         while mes.has_next do
           # append statment to meaning object
-          meaning.statement << mes.next
+          meaning.append_statement mes.next
         end
         meaning
       end
 
-
+      # get statements by direct uwn query
       def statements object_string
         ret = []
         mes = @uwn.get(Entity.new(object_string))

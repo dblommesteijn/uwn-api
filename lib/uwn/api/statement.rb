@@ -13,20 +13,41 @@ module Uwn
         @parent_language = Util.parent_root(self).language
       end
 
-      def <<(statement)
-        self.statements << Statement.new(parent: self, object: statement)
-      end
-
       # term name as a string
       def term_str
-        @object.get_object.to_s.gsub(/^([t][\/]#{@parent_language}[\/]){1}/, "")
+        #@object.get_object.to_s.gsub(/^([t][\/]#{@parent_language}[\/]){1}/, "")
+        @object.get_object.get_term_str #to_s.gsub(/^([t][\/][a-z]{3}[\/]){1}/, "")
       end
 
       # language of object
       def language
-        match = @object.get_object.to_s.match(/[t][\/]([a-z]{3})[\/]{1}[\w]*/)
+        @object.get_object.get_term_language
+        # match = @object.get_object.get_term_language #to_s.match(/[t][\/]([a-z]{3})[\/]{1}[\w]*/)
+        # return match[1] unless match.nil?
+        # nil
+      end
+
+      # word lexcat (noun, verb, adj etc.)
+      def lexcat
+        match = @object.get_object.to_s.match(/lexcat:([a-z]+)/)
         return match[1] unless match.nil?
         nil
+      end
+
+      def is_synonym?
+        @object.get_object.get_term_language == @parent_language #.to_s.match(/[t][\/]#{@parent_language}[\/][\w]+/).nil?
+      end
+
+      def has_synset?
+        self.synset.is_a? String
+      end
+
+      def is_lexical_category?
+        @object.get_predicate.to_s == "rel:lexical_category"
+      end
+
+      def is_subclass?
+        @object.get_predicate.to_s == "rel:subclass"
       end
 
       # subject object
@@ -69,7 +90,7 @@ module Uwn
 
       def synonyms
         sts = self.predicate_match "rel:lexicalization"
-        sts.reject{|t| t.object.to_s.match(/[t][\/]#{@parent_language}[\/][\w]+/).nil? }
+        sts.reject{|t| !t.is_synonym? }
       end
 
       def subclasses
@@ -81,15 +102,16 @@ module Uwn
       end
 
       def synsets
-        self.lookup_synset self.synset
+        self.predicate_match
       end
 
       protected
 
-      def predicate_match predicate_name
-        sts = self.synsets
+      def predicate_match predicate_name = nil
+        sts = self.lookup_synset self.synset
         sts.map!{|s| Statement.new(parent: self, object: s) }
-        sts.reject{|t| t.predicate.to_s != predicate_name}
+        return sts.reject{|t| t.predicate.to_s != predicate_name} unless predicate_name.nil?
+        sts
       end
 
       def lookup_synset synset

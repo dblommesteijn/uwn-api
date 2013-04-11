@@ -1,37 +1,55 @@
 
 module Uwn
   module Api
-      
+    
+    # 
     class Meaning
 
-      attr_accessor :connect, :parent, :term, :language, :statement
+      attr_accessor :connect, :parent, :term, :language, :statements
 
       def initialize options={}
         self.connect = options[:connect] if options.include? :connect
         self.term = options[:term] if options.include? :term
         self.language = options[:language] if options.include? :language
-        self.statement = Statement.new parent: self
+        self.statements = []
+        # self.statement = Statement.new parent: self
       end
 
+      def has_meaning?
+        !self.statements.empty?
+      end
+
+      def append_statement statement
+        self.statements << Statement.new(parent: self, object: statement)
+      end
+
+      # short handeded methods
+
+
       def synsets
-        self.statement.statements.map{|s| s.synset }
+        self.statements.flat_map{ |s| s.synsets }
       end
 
       def synonyms
-        self.statement.statements.flat_map{|s| s.synonyms }
+        self.statements.flat_map{ |s| s.synonyms }
       end
 
       def lexicalizations
-        self.statement.statements.flat_map{|s| s.lexicalizations }
+        self.statements.flat_map{ |s| s.lexicalizations }
       end
 
       def glosses
-        self.statement.statements.flat_map{|s| s.glosses }
+        self.statements.flat_map{ |s| s.glosses }
       end
 
       def subclasses
-        self.statement.statements.flat_map{|s| s.subclasses }
+        self.statements.flat_map{ |s| s.subclasses }
       end
+
+      def lexical_categories
+        self.statements.flat_map{ |s| s.lexical_categories }
+      end
+
 
 
     end
