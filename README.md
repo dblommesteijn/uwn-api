@@ -1,6 +1,6 @@
 # Uwn::Api
 
-This project is a Ruby on Rails (gem) wrapper for the UWN database (build from Wordnet), using JRuby (Java) and uwnapi.jar (which are included). Ruby MRI users will NOT be successful using this gem!!
+This project is a Ruby on Rails (gem) wrapper for the UWN database (build from Wordnet), using JRuby (Java) and uwnapi.jar (included). Ruby MRI users will NOT be successful using this gem!!
 
  * UWN/MENTA: Towards a Universal Multilingual Wordnet API.
  * http://www.mpi-inf.mpg.de/yago-naga/uwn/downloads.html
@@ -19,10 +19,16 @@ Or install it yourself as (RubyGems):
 
     $ gem install uwn-api
 
+## Changelog
+  
+  * Version (0.0.2)
+
+    Bug fix, meaning with missing synset (Java Nullpointer Exception)
+
 
 ## Roadmap
 
-  * Version (0.0.2)
+  * Version (0.0.3)
 
     Depth query on synset subclasses
 
