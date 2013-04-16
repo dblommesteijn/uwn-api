@@ -42,4 +42,5 @@ class UwnVerifyStatement < Test::Unit::TestCase
       assert statement.weight.is_a?(Float), "expected Float"
     end
   end
+
 end

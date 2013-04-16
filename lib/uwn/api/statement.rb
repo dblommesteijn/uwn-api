@@ -118,6 +118,7 @@ module Uwn
 
       # get predicates (with or without name filter)
       def predicate_match predicate_name = nil
+        return [] if self.synset.nil?
         sts = self.lookup_synset self.synset
         sts.map!{|s| Statement.new(parent: self, object: s) }
         return sts.reject{|t| t.predicate.to_s != predicate_name} unless predicate_name.nil?
