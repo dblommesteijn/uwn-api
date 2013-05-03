@@ -77,9 +77,9 @@ module Uwn
       def synset
         unless @object.nil?
           os = @object.get_object.to_s
-          return os unless os.match(/([s][\/][n]){1}[0-9]+/).nil?
+          return os unless os.match(/([s][\/][a-z]){1}[0-9]+/).nil?
           su = @object.get_subject.to_s
-          return su unless su.match(/([s][\/][n]){1}[0-9]+/).nil?
+          return su unless su.match(/([s][\/][a-z]){1}[0-9]+/).nil?
         end
       end
 

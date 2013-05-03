@@ -124,15 +124,6 @@ class UwnVerifyTree < Test::Unit::TestCase
     end
   end
 
-  def test_predicate_match_for_empty_synset
-    meaning = @uwn.meaning("loot", "eng")
-    begin
-      meaning.synsets.each do |synset|
-        assert synset.is_a?(Uwn::Api::Statement), "expected a statement"
-      end
-    rescue Exception => e
-      assert false, "crashing on predicate_match"
-    end
-  end
+
 
 end
