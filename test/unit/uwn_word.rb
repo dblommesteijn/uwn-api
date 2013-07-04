@@ -34,10 +34,28 @@ class UwnVerifyTree < Test::Unit::TestCase
     # puts meaning.inspect
   end
 
-  def test_unique_synsets
-    meaning = @uwn.meaning("between", "eng")
-    assert meaning.lexical_categories.map(&:lexcat).include? "adverb"
+  def test_adverbs
+    words = ["above", "along", "below", "beside", "between", "during", "for", "from", "in", "near", "on", "outside", "over", "past", "through", "towards", "under", "up", "with"]
+    words.each do |word|
+      meaning = @uwn.meaning(word, "eng")
+      # skip unable to find
+      if meaning.statements.size <= 0
+        puts "word: #{word}"
+        next
+      end
+      assert meaning.lexical_categories.map(&:lexcat).include?("adverb"), "word: `#{word}` not an adverb"
+    end
   end
+
+  def test_verbs
+    words = ["go", "do"]
+    words.each do |word|
+      meaning = @uwn.meaning(word, "eng")
+      assert meaning.lexical_categories.map(&:lexcat).include?("verb"), "word: `#{word}` not a verb"
+    end
+  end
+
+
 
 end
 
