@@ -3,7 +3,7 @@
 This project is a Ruby on Rails (gem) wrapper for the UWN database (build from Wordnet), using JRuby (Java) and uwnapi.jar (included). Ruby MRI users will NOT be successful using this gem!!
 
  * UWN/MENTA: Towards a Universal Multilingual Wordnet API.
- * http://www.mpi-inf.mpg.de/yago-naga/uwn/downloads.html
+ * http://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/uwn/
 
 ## Installation
 
@@ -20,7 +20,7 @@ Or install it yourself as (RubyGems):
     $ gem install uwn-api
 
 ## Changelog
-  
+
   * Version (0.0.2)
 
     Bug fix, meaning with missing synset (Java Nullpointer Exception)
@@ -39,15 +39,16 @@ Or install it yourself as (RubyGems):
 
 ### Download and install
 
-Before using UWN you'll need to download Wordnet and UWN plugin libraries (http://www.mpi-inf.mpg.de/yago-naga/uwn/downloads.html) which are ~100Mb, and place it in the appropriate directory.
+Before using UWN you'll need to download UWNAPI, Wordnet, and UWN plugin libraries (http://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/uwn/) which are ~100Mb, and place it in the appropriate directory.
 
 Place the uwn.dat/plg (and/or) wordnet.dat/plg into your plugins directory
-  
+
     ~/yourgems/uwn-api/lib/uwn/api/deps/plugins (default directory)
 
-OR Point Uwn::Api::Connect to the plugins path.
+OR `Point Uwn::Api::Connect` to the plugins path.
 
 ```ruby
+require "uwn/api"
 uwn = Uwn::Api::Connect.new plugins_path: "/location/of/your/plugins"
 ```
 
