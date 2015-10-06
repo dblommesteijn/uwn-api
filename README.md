@@ -43,12 +43,12 @@ Or install it yourself as (RubyGems):
 
 Before using UWN you'll need to download UWNAPI, Wordnet, and UWN plugin libraries (http://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/uwn/) which are ~100Mb, and place it in the appropriate directory.
 
-Place the `uwn.dat/plg` (and/or) `wordnet.dat/plg` into your plugins directory: `~/yourgems/uwn-api/lib/uwn/api/deps/plugins` (default directory)
-
 * http://resources.mpi-inf.mpg.de/yago-naga/uwn/uwnapi.zip (main program with `/plugins` dir)
 * http://resources.mpi-inf.mpg.de/yago-naga/uwn/wordnet.zip
 * http://resources.mpi-inf.mpg.de/yago-naga/uwn/uwn.zip
 * http://resources.mpi-inf.mpg.de/yago-naga/uwn/etymwn.zip
+
+Place the `uwn.dat/plg` (and/or) `wordnet.dat/plg` into your plugins directory: `~/yourgems/uwn-api/lib/uwn/api/deps/plugins` (default directory)
 
 OR `Point Uwn::Api::Connect` to the plugins path.
 
