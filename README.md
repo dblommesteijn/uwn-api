@@ -5,6 +5,8 @@ This project is a Ruby on Rails (gem) wrapper for the UWN database (build from W
  * UWN/MENTA: Towards a Universal Multilingual Wordnet API.
  * http://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/uwn/
 
+*NOTE: This gem is mentioned on the UWN/MENTA website as thrid party ruby wrapper!*
+
 ## Installation
 
 Add this line to your application's Gemfile (bundler):
@@ -35,15 +37,18 @@ Or install it yourself as (RubyGems):
     Depth search over multiple nodes
 
 
-## Usage
+## Usage/ Setup
 
 ### Download and install
 
 Before using UWN you'll need to download UWNAPI, Wordnet, and UWN plugin libraries (http://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/uwn/) which are ~100Mb, and place it in the appropriate directory.
 
-Place the uwn.dat/plg (and/or) wordnet.dat/plg into your plugins directory
+Place the `uwn.dat/plg` (and/or) `wordnet.dat/plg` into your plugins directory: `~/yourgems/uwn-api/lib/uwn/api/deps/plugins` (default directory)
 
-    ~/yourgems/uwn-api/lib/uwn/api/deps/plugins (default directory)
+* http://resources.mpi-inf.mpg.de/yago-naga/uwn/uwnapi.zip (main program with `/plugins` dir)
+* http://resources.mpi-inf.mpg.de/yago-naga/uwn/wordnet.zip
+* http://resources.mpi-inf.mpg.de/yago-naga/uwn/uwn.zip
+* http://resources.mpi-inf.mpg.de/yago-naga/uwn/etymwn.zip
 
 OR `Point Uwn::Api::Connect` to the plugins path.
 
